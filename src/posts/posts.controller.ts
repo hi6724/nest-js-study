@@ -1,24 +1,46 @@
 import { Controller, Get } from '@nestjs/common';
 import { PostsService } from './posts.service';
-interface Post {
+interface PostModel {
+  id: number;
   author: string;
   title: string;
   content: string;
   likeCount: number;
   commentCount: number;
 }
+
+const posts: PostModel[] = [
+  {
+    id: 1,
+    author: 'newjeans_official',
+    title: '뉴진스 민지',
+    content: '메이크업 고치고 있는 민지',
+    likeCount: 10,
+    commentCount: 5,
+  },
+  {
+    id: 2,
+    author: 'newjeans_official',
+    title: '뉴진스 해린',
+    content: '노래 연습 하고 있는 해린',
+    likeCount: 10,
+    commentCount: 5,
+  },
+  {
+    id: 3,
+    author: 'blackpink_official',
+    title: '블랙핑크 로제',
+    content: '춤 연습 하고 있는 로제',
+    likeCount: 10,
+    commentCount: 5,
+  },
+];
 @Controller('posts')
 export class PostsController {
   constructor(private readonly postsService: PostsService) {}
 
   @Get()
-  getPost(): Post {
-    return {
-      author: 'John Doe',
-      title: 'My First Post',
-      content: 'This is my first post on NestJS',
-      likeCount: 10,
-      commentCount: 5,
-    };
+  getPosts(): PostModel[] {
+    return posts;
   }
 }
