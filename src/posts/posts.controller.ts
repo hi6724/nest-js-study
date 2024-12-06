@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   NotFoundException,
   Param,
@@ -94,5 +95,13 @@ export class PostsController {
     if (title) post.title = title;
     if (content) post.content = content;
     return post;
+  }
+
+  @Delete(':id')
+  deletePost(@Param('id') id: string) {
+    const index = posts.findIndex((el) => el.id === +id);
+    if (index === -1) return -1;
+    posts.splice(index, 1);
+    return 1;
   }
 }
