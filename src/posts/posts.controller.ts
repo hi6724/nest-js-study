@@ -5,6 +5,7 @@ import {
   NotFoundException,
   Param,
   Post,
+  Put,
 } from '@nestjs/common';
 import { PostsService } from './posts.service';
 interface PostModel {
@@ -76,6 +77,22 @@ export class PostsController {
     };
     posts.push(post);
 
+    return post;
+  }
+
+  @Put(':id')
+  putPost(
+    @Param('id') id: string,
+    @Body('author') author?: string,
+    @Body('title') title?: string,
+    @Body('content') content?: string,
+  ) {
+    const postIndex = posts.findIndex((post) => post.id === +id);
+    const post = posts[postIndex];
+    if (!post) throw new NotFoundException('Post not found');
+    if (author) post.author = author;
+    if (title) post.title = title;
+    if (content) post.content = content;
     return post;
   }
 }
